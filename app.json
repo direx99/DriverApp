@@ -22,21 +22,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dinith.DriverApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "f7564a78-d8b5-4b41-8bb4-a2e5471a35b8"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/f7564a78-d8b5-4b41-8bb4-a2e5471a35b8"
     }
   }
 }

@@ -7,7 +7,7 @@ import customMarkerImage from "../circle.png"; // Replace with the actual path t
 import customLiveImage from "../bus.png"; // Replace with the actual path to your custom marker image
 
 
-const Map = ({tripId}) => {
+const Map = ({tripId,setWaitCount}) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -29,7 +29,7 @@ const Map = ({tripId}) => {
             updateMarkerStatus(marker._id);
             // You can also update the local state if needed
             const updatedMarkers = markers.map((m) =>
-              m._id === marker._id ? { ...m, status: "picked",bus:tripId } : m
+              m._id === marker._id ? { ...m, status: "picked" } : m
             );
             setMarkers(updatedMarkers);
           },
@@ -43,6 +43,7 @@ const Map = ({tripId}) => {
     try {
       await axios.put(`https://transpo-go.onrender.com/trips/${markerId}`, {
         status: "picked",
+        tripIds:tripId
       });
       // You may want to handle success or error here
     } catch (error) {
@@ -67,6 +68,7 @@ const Map = ({tripId}) => {
   }, []); // Empty dependency array to run only once when component mounts
 useEffect(()=>{
   fetchLocationsFromServer()
+
 },[markers])
   const fetchLocationsFromServer = async (latitude, longitude) => {
     try {
