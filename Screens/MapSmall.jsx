@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text,Alert, Image } from "react-native";
+import { View, Text,Alert } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import axios from "axios";
@@ -7,7 +7,7 @@ import customMarkerImage from "../circle.png"; // Replace with the actual path t
 import customLiveImage from "../bus.png"; // Replace with the actual path to your custom marker image
 
 
-const Map = ({tripId}) => {
+const MapSmall = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -21,19 +21,8 @@ const Map = ({tripId}) => {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
-        },
-        {
-          text: "Pick",
-          onPress: () => {
-            // Call the function to update the marker status
-            updateMarkerStatus(marker._id);
-            // You can also update the local state if needed
-            const updatedMarkers = markers.map((m) =>
-              m._id === marker._id ? { ...m, status: "picked",bus:tripId } : m
-            );
-            setMarkers(updatedMarkers);
-          },
-        },
+        }
+        
       ],
       { cancelable: false }
     );
@@ -71,7 +60,7 @@ useEffect(()=>{
   const fetchLocationsFromServer = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        `https://transpo-go.onrender.com/trips`
+        `https://transpo-go.onrender.com/trips?latitude=${latitude}&longitude=${longitude}`
       );
 
       // Assuming the response.data is an array of locations
@@ -103,17 +92,9 @@ useEffect(()=>{
               longitude: location.longitude,
             }}
             title="Current Location"
-          
+            image={customLiveImage}
 
-            
-
-          >
-             <Image
-    source={customLiveImage}
-    style={{ width: 30, height: 30 }} // Set your desired width and height values here
-  />
-
-          </Marker>
+          />
 
           {/* Render markers for locations */}
           {waitingMarkers.map((marker, index) => (
