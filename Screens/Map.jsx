@@ -130,7 +130,12 @@ useEffect(()=>{
               onPress={() => handleMarkerPress(marker)}
 
 
-            />
+            >
+               <Image
+    source={customMarkerImage}
+    style={{ width: 25, height: 25 }} // Set your desired width and height values here
+  />
+            </Marker>
           ))}
         </MapView>
       ) : (
