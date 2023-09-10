@@ -75,34 +75,7 @@ const CurrentTime = () => {
   );
 };
 
-const SelectRoute = (props) => {
-  const [selectedValue, setSelectedValue] = useState(null);
 
-  return (
-    <View>
-      <Text
-        style={{
-          textAlign: "center",
-          fontWeight: "600",
-          opacity: 0.4,
-          color: "#fff",
-        }}
-      >
-        Start Location
-      </Text>
-      <RNPickerSelect
-        onValueChange={(value) => setSelectedValue(value)}
-        items={props.itemArray}
-        placeholder={{
-          label: props.label,
-          value: null,
-        }}
-        value={selectedValue}
-        style={pickerSelectStyles2} // Apply the custom styles
-      />
-    </View>
-  );
-};
 
 const NewTrip = () => {
 
@@ -117,7 +90,34 @@ const NewTrip = () => {
   const [driver] = useState("user");
   const [seats,selectedSeats] = useState(0);
 
-
+  const SelectRoute = (props) => {
+    const [selectedValue, setSelectedValue] = useState(null);
+  
+    return (
+      <View>
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "600",
+            opacity: 0.4,
+            color: "#fff",
+          }}
+        >
+          Start Location
+        </Text>
+        <RNPickerSelect
+          onValueChange={(value) => setSelectedStartLocation(value)}
+          items={props.itemArray}
+          placeholder={{
+            label: props.label,
+            value: null,
+          }}
+          value={selectedStartLocation}
+          style={pickerSelectStyles2} // Apply the custom styles
+        />
+      </View>
+    );
+  };
 
   const navigation = useNavigation();
 

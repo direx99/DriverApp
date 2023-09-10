@@ -1,14 +1,20 @@
-import { StyleSheet, SafeAreaView, Text, View, Image } from "react-native";
+import { StyleSheet, SafeAreaView, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Map from "./Map";
 import { BlurView } from "expo-blur";
 import s1 from "../assets/seat.png";
 import s2 from "../assets/seat2.png";
 import passenger from "../passenger.png";
+import close from "../close.png";
+
+import Modal from 'react-native-modal';
+
 
 
 import { getCurrentPositionAsync } from "expo-location"; // Import the location module
 import axios from "axios";
+import { Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const MapView = ({ route }) => {
   const [latitude, setLatitude] = useState(null);
@@ -18,6 +24,14 @@ const MapView = ({ route }) => {
   const [tt, setTT] = useState(true);
   const [myPassengers,setMyPassengers]=useState([])
   const [psCount,setPsCount]=useState(0)
+  const [isModalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation()
+
+  const toggleModal = () => {
+    getMyPassenger()
+    setModalVisible(!isModalVisible);
+
+  };
 
   // State to store the location data
   const [locationData, setLocationData] = useState(null);
@@ -130,7 +144,7 @@ const MapView = ({ route }) => {
       >
         {/* Content */}
         <Text style={{ fontWeight: "700", color: "#fff", fontSize: 20 }}>
-          Borella to {responseData.savedTrip.endLocation}
+          {responseData.savedTrip.startLocation} to {responseData.savedTrip.endLocation}
         </Text>
         <View
           style={{
@@ -149,7 +163,7 @@ const MapView = ({ route }) => {
             }}
           >
             <Text style={{ fontWeight: "600", color: "#fff", fontSize: 15 }}>
-              {psCount} Waiting passengers
+              {psCount} ongoing passengers
             </Text>
           </View>
           <View
@@ -182,9 +196,11 @@ const MapView = ({ route }) => {
   };
 
   return (
+    <>
     <View style={{ flex: 1 }}>
       <Map tripId={tripId}/>
-      <View
+      <TouchableOpacity
+      onPress={()=>navigation.navigate("newtrip")}
         style={{
           backgroundColor: "#D71313",
           borderWidth: 3,
@@ -208,9 +224,10 @@ const MapView = ({ route }) => {
         >
           End Trip
         </Text>
-      </View>
+      </TouchableOpacity>
 
       <Glassmorphism />
+      
       <View style={{position:'absolute',top:200,right:10}}>
         {
             psCount > 0 && (
@@ -218,9 +235,31 @@ const MapView = ({ route }) => {
                 <Text style={{color:'#fff',fontWeight:'800',fontSize:11}}>{psCount}</Text>
             </View>)
         }
+        <TouchableOpacity onPress={toggleModal}>
         <Image style={{width:50,height:50,borderWidth:3,borderRadius:100,borderColor:'#fff',marginTop:-10}} source={passenger}/>
+        </TouchableOpacity>
       </View>
+     
     </View>
+     <Modal isVisible={isModalVisible}>
+     <View style={{ height:200,backgroundColor:'#fff',position:'absolute',bottom:100,width:'100%',borderRadius:20,padding:20}}>
+       <Text style={{fontSize:18,fontWeight:'700'}}>My passengers</Text>
+
+       
+          {myPassengers.map((c, index) => (
+            <Text> Passenger ID
+             {c._id}
+
+            </Text>
+          ))
+          }
+          <TouchableOpacity onPress={toggleModal} style={{position:'absolute',top:10,right:10}}>
+<Image source={close} style={{width:25,height:25}}/>
+          </TouchableOpacity>
+      
+     </View>
+   </Modal>
+   </>
   );
 };
 
