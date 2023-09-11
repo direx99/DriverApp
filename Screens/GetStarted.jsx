@@ -38,7 +38,7 @@ const GetStarted = () => {
 
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ marginTop: 10 }}>
+          {/* <TouchableOpacity style={{ marginTop: 10 }}>
 
             <ImageBackground source={bgButton} imageStyle={styles.bgImgStyle} style={styles.bgStyle} >
             <Text style={[styles.Title2Style,{marginTop:0}]}>Sign Up</Text>
@@ -46,7 +46,7 @@ const GetStarted = () => {
             </ImageBackground>
 
           </TouchableOpacity>
-
+ */}
 
         </View>
 

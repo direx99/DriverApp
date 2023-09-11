@@ -125,8 +125,7 @@ useEffect(()=>{
                 latitude: marker.latitude,
                 longitude: marker.longitude,
               }}
-              title={`Marker ${index}`}
-              image={customMarkerImage}
+              title={`To ${marker.endLocation}`}
               onPress={() => handleMarkerPress(marker)}
 
 

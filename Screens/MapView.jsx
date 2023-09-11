@@ -57,7 +57,7 @@ const MapView = ({ route }) => {
         {
           latitude,
           longitude,
-          seats:(50-psCount)
+          seats:50-psCount
         }
       );
 
